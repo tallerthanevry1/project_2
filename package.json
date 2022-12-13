@@ -1,7 +1,7 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
+  "description": "- User will be able to track daily intake of food.  - Rather than then the user keeping a journal as something they would have to carry around, they can use an app on their phone or website to log the data to keep accurate for their knowledge or share it with a doctor.  I choose this concept because I've had times where I would try to remember what I ate when asked on the spot and would come up empty and this can outline each meal you had.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
@@ -20,5 +21,14 @@
     "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tallerthanevry1/project_2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tallerthanevry1/project_2/issues"
+  },
+  "homepage": "https://github.com/tallerthanevry1/project_2#readme"
 }

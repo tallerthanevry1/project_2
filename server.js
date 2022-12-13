@@ -1,36 +1,35 @@
-/// Import
+const express = require('express');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const bodyparser = require("body-parser");
+const path = require('path');
 
-require("dotenv").config() // .env
-const express = require ("express")
-const morgan = require("morgan")
-const mongoose = require("mongoose")
-const methodOverride = require("method-override")
+const connectDB = require('./server/database/connection');
 
-// create express app
-const app = express()
+const app = express();
 
-// establish mongo connection
-mongoose.connect(process.env.DATABASE_URL)
+dotenv.config( { path : 'config.env'} )
+const PORT = process.env.PORT || 8080
 
-// mongoose connection events
-mongoose.connection
-.on("open", () => console.log("connected to mongo"))
-.on("close", () => console.log("Disconnected to Mongo"))
-.on("error", (error) => console.log(error))
+// log requests
+app.use(morgan('tiny'));
 
-// register middleware
-app.use(morgan("dev"))
-app.use("/static", express.static("public"))
-app.use(express.urlencoded({extended: true}))
-app.use(methodOverride("_method"))
+// mongodb connection
+connectDB();
 
-// Routes and Routers
-app.get("/", (req, res) => {
-   res.send("<h1> Server is working</h1>") 
-})
+// parse request to body-parser
+app.use(bodyparser.urlencoded({ extended : true}))
 
-//start the server (listener)
+// set view engine
+app.set("view engine", "ejs")
+//app.set("views", path.resolve(__dirname, "views/ejs"))
 
-const PORT = process.env.PORT || 3000
-app.listen(PORT), () => console.log(`listening on port`)
+// load assets
+app.use('/css', express.static(path.resolve(__dirname, "assets/css")))
+app.use('/img', express.static(path.resolve(__dirname, "assets/img")))
+app.use('/js', express.static(path.resolve(__dirname, "assets/js")))
 
+// load routers
+app.use('/', require('./server/routes/router'))
+
+app.listen(PORT, ()=> { console.log(`Server is running on http://localhost:${PORT}`)});
